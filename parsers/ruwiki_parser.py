@@ -1,4 +1,4 @@
-import pprint
+import re
 import time
 
 import bs4
@@ -52,7 +52,12 @@ class RuWikiParser:
         soup = BeautifulSoup(r, 'lxml')
 
         return {
+            "lat_mane": self._get_lat_name(soup),
             "ru_mane": self._get_ru_name(soup),
+            "img": self._get_img(soup),
+
+            "squad": self._get_classification_info(soup, "Отряд:"),
+            "family": self._get_classification_info(soup, "Семейство:"),
 
             "description": self._get_info_block(soup, "Описание"),
             "distribution": self._get_info_block(soup, "Распространение"),
@@ -63,8 +68,39 @@ class RuWikiParser:
             "security_notes": self._get_info_block(soup, "Замечания_по_охране"),
         }
 
+    def _get_lat_name(self, soup: bs4.BeautifulSoup):
+        pattern = "\(лат\.([^)]+)\)"
+        match = re.search(pattern, soup.text)
+
+        if match:
+            latin_name = match.group(1)
+            return latin_name.strip()
+        else:
+            return ""
+
     def _get_ru_name(self, soup: bs4.BeautifulSoup):
         return soup.find("span", class_="mw-page-title-main").text
+
+    def _get_img(self, soup: bs4.BeautifulSoup):
+        try:
+            return soup.find("td", class_="infobox-image").find("img").get("src")
+        except:
+            return ""
+
+    def _get_classification_info(self, soup: bs4.BeautifulSoup, classification_name: str):
+        element = soup.find('div', class_='ts-Taxonomy-rang-label', string=classification_name)
+
+        if element is None:
+            element2 = soup.find(lambda tag: tag.name == "th" and classification_name in tag.text)
+            if not (element2 is None):
+                element3 = element2.find_next_sibling()
+                if not (element3 is None):
+                    return element3.text.strip()
+
+        # if element is None:
+        #     return ""
+
+        return element.find_next_sibling("div").find("a").text.strip()
 
     def _get_info_block(self, soup: bs4.BeautifulSoup, block_name: str):
         description = soup.find(id=block_name)

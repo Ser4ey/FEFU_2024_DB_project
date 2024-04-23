@@ -1,16 +1,20 @@
-# This is a sample Python script.
+import re
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
+a = """
+Дыбка степная[1] (лат. Saga pedo) — кузнечик подсемейства дыбок. Самы(лат. Saga pedo) — кузнечик подсем(лат. Saga pedo) — кузнечик подсем(лат. Saga pedo) — кузнечик подсем(лат. Saga pedo) — кузнечик подсемй крупный кузнечик России. Занесён в Красную книгу МСОП, Европейский Красный список, Приложение 2 Бернской конвенции, в Красные книги Украины и РФ в категорию 2 (сокращающийся в численности вид).
+"""
 
 def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    pattern = "\(лат\.([^)]+)\)"
+    match = re.search(pattern, a)
+
+    print(match)
+    if match:
+        latin_name = match.group(1)
+        return latin_name
+    else:
+        return "1"
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    print(print_hi('PyCharm'))
