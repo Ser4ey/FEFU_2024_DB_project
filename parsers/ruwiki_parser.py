@@ -1,3 +1,4 @@
+import pprint
 import time
 
 import bs4
@@ -48,13 +49,22 @@ class RuWikiParser:
 
     def get_insect(self, url: str):
         r = self._get(url)
-        # print(r)
-        # input(":")
         soup = BeautifulSoup(r, 'lxml')
 
         return {
-            "description": self._get_info_block(soup, "Описание")
+            "ru_mane": self._get_ru_name(soup),
+
+            "description": self._get_info_block(soup, "Описание"),
+            "distribution": self._get_info_block(soup, "Распространение"),
+            "area": self._get_info_block(soup, "Ареал"),
+            "habitat": self._get_info_block(soup, "Местообитания"),
+            "limiting_factors": self._get_info_block(soup, "Лимитирующие_факторы"),
+            "count": self._get_info_block(soup, "Численность"),
+            "security_notes": self._get_info_block(soup, "Замечания_по_охране"),
         }
+
+    def _get_ru_name(self, soup: bs4.BeautifulSoup):
+        return soup.find("span", class_="mw-page-title-main").text
 
     def _get_info_block(self, soup: bs4.BeautifulSoup, block_name: str):
         description = soup.find(id=block_name)
@@ -62,8 +72,14 @@ class RuWikiParser:
             return ""
 
         description_text = description.parent.find_next_sibling("p")
-        return description_text.text
+        return description_text.text.strip()
 
+    @staticmethod
+    def print_insect(insect_dict):
+        print("-"*50)
+        for k, v in insect_dict.items():
+            print(f"    {k}: {v}")
+        print("-"*50)
 
 
 if __name__ == "__main__":
@@ -71,7 +87,10 @@ if __name__ == "__main__":
 
     a = ruWikiParser.get_insects_links()
 
-    for i in a:
-        ruWikiParser.get_insect(i)
+    for i in range(len(a)):
+        print(f"{i+1}/{len(a)}")
+        ruWikiParser.print_insect(ruWikiParser.get_insect(a[i]))
+        time.sleep(1)
+
 
 
