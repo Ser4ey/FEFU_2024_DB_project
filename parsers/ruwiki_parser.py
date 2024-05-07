@@ -97,9 +97,6 @@ class RuWikiParser:
                 if not (element3 is None):
                     return element3.text.strip()
 
-        # if element is None:
-        #     return ""
-
         return element.find_next_sibling("div").find("a").text.strip()
 
     def _get_info_block(self, soup: bs4.BeautifulSoup, block_name: str):

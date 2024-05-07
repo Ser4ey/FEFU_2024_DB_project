@@ -59,13 +59,14 @@ class CiconParser:
                 "squad": squad,
                 "family": family,
 
+                "category_and_status": self._get_classification_info(soup, "Категория и статус"),
                 # "description": self._get_info_block(soup, "Описание"),
-                # "distribution": self._get_info_block(soup, "Распространение"),
-                # "area": self._get_info_block(soup, "Ареал"),
-                # "habitat": self._get_info_block(soup, "Местообитания"),
-                # "limiting_factors": self._get_info_block(soup, "Лимитирующие_факторы"),
-                # "count": self._get_info_block(soup, "Численность"),
-                # "security_notes": self._get_info_block(soup, "Замечания_по_охране"),
+                "distribution": self._get_classification_info(soup, "Распространение"),
+                # "area": self._get_classification_info(soup, "Места обитания и особенности экологии"),
+                "habitat": self._get_classification_info(soup, "Места обитания и особенности экологии"),
+                "limiting_factors": self._get_classification_info(soup, "Лимитирующие факторы"),
+                "count": self._get_classification_info(soup, "Численность"),
+                "security_notes": self._get_classification_info(soup, "Принятые меры охраны"),
         }
 
     def _get_lat_ru_names_and_img_and_squad_family(self, soup: bs4.BeautifulSoup) -> (str, str, str, str, str):
@@ -86,31 +87,18 @@ class CiconParser:
 
         return lat_name, ru_name, img, squad, family
 
-
-
-
     def _get_classification_info(self, soup: bs4.BeautifulSoup, classification_name: str):
-        element = soup.find('div', class_='ts-Taxonomy-rang-label', string=classification_name)
+        elements = soup.select("article p")
 
-        if element is None:
-            element2 = soup.find(lambda tag: tag.name == "th" and classification_name in tag.text)
-            if not (element2 is None):
-                element3 = element2.find_next_sibling()
-                if not (element3 is None):
-                    return element3.text.strip()
+        for element in elements:
+            text = element.text
+            if not (classification_name in text):
+                continue
 
-        # if element is None:
-        #     return ""
+            text = text.replace(classification_name+'.', '', 1).replace(classification_name, '', 1).strip()
+            return text
 
-        return element.find_next_sibling("div").find("a").text.strip()
-
-    def _get_info_block(self, soup: bs4.BeautifulSoup, block_name: str):
-        description = soup.find(id=block_name)
-        if description is None:
-            return ""
-
-        description_text = description.parent.find_next_sibling("p")
-        return description_text.text.strip()
+        return ""
 
     @staticmethod
     def print_insect(insect_dict):
