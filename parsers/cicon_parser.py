@@ -6,8 +6,8 @@ import requests
 from bs4 import BeautifulSoup
 
 
-class RuWikiParser:
-    insects_catalogue_url = "https://ru.ruwiki.ru/wiki/Список_насекомых,_занесённых_в_Красную_книгу_России"
+class CiconParser:
+    insects_catalogue_url = "https://cicon.ru/nasekomie.html"
 
     def __init__(self):
         self.session = requests.Session()
@@ -31,19 +31,18 @@ class RuWikiParser:
         return r.text
 
     def get_insects_links(self):
-        r = self._get(RuWikiParser.insects_catalogue_url)
+        r = self._get(CiconParser.insects_catalogue_url)
+
         soup = BeautifulSoup(r, 'lxml')
-        blocks = soup.select("table.wikitable tr")
+        blocks = soup.select(".lin li a")
 
         links = []
         for i in range(len(blocks)):
-            tds = blocks[i].find_all('td')
-            if len(tds) != 5:
-                print("no")
-                continue
-
-            link = "https://ru.ruwiki.ru" + tds[1].find("a").get("href")
+            insect_name = blocks[i].text
+            insect_link = blocks[i].get("href")
+            link = "https://cicon.ru" + insect_link
             links.append(link)
+            print(f"{i+1}) {insect_name} - {link}")
 
         return links
 
@@ -51,41 +50,44 @@ class RuWikiParser:
         r = self._get(url)
         soup = BeautifulSoup(r, 'lxml')
 
+        lat_name, ru_name, img, squad, family = self._get_lat_ru_names_and_img_and_squad_family(soup)
         return {
-            "lat_name": self._get_lat_name(soup),
-            "ru_name": self._get_ru_name(soup),
-            "img": self._get_img(soup),
+                "lat_name": lat_name,
+                "ru_name": ru_name,
+                "img": img,
 
-            "squad": self._get_classification_info(soup, "Отряд:"),
-            "family": self._get_classification_info(soup, "Семейство:"),
+                "squad": squad,
+                "family": family,
 
-            "description": self._get_info_block(soup, "Описание"),
-            "distribution": self._get_info_block(soup, "Распространение"),
-            "area": self._get_info_block(soup, "Ареал"),
-            "habitat": self._get_info_block(soup, "Местообитания"),
-            "limiting_factors": self._get_info_block(soup, "Лимитирующие_факторы"),
-            "count": self._get_info_block(soup, "Численность"),
-            "security_notes": self._get_info_block(soup, "Замечания_по_охране"),
+                # "description": self._get_info_block(soup, "Описание"),
+                # "distribution": self._get_info_block(soup, "Распространение"),
+                # "area": self._get_info_block(soup, "Ареал"),
+                # "habitat": self._get_info_block(soup, "Местообитания"),
+                # "limiting_factors": self._get_info_block(soup, "Лимитирующие_факторы"),
+                # "count": self._get_info_block(soup, "Численность"),
+                # "security_notes": self._get_info_block(soup, "Замечания_по_охране"),
         }
 
-    def _get_lat_name(self, soup: bs4.BeautifulSoup):
-        pattern = "\(лат\.([^)]+)\)"
-        match = re.search(pattern, soup.text)
+    def _get_lat_ru_names_and_img_and_squad_family(self, soup: bs4.BeautifulSoup) -> (str, str, str, str, str):
+        ru_name = soup.select_one("h1").text
 
-        if match:
-            latin_name = match.group(1)
-            return latin_name.strip()
-        else:
-            return ""
+        article = soup.select_one("#content article")
 
-    def _get_ru_name(self, soup: bs4.BeautifulSoup):
-        return soup.find("span", class_="mw-page-title-main").text
+        img = article.find("img").get("src")
+        img = "https://cicon.ru" + img
 
-    def _get_img(self, soup: bs4.BeautifulSoup):
-        try:
-            return soup.find("td", class_="infobox-image").find("img").get("src")
-        except:
-            return ""
+        text = article.find("pre").text
+        text = text.split("\n")
+        text = [i.strip() for i in text]
+
+        lat_name = " ".join(text[1].split(" ")[:2])
+        squad = text[-2].split("–")[-1].strip()
+        family = text[-1].split("–")[-1].strip()
+
+        return lat_name, ru_name, img, squad, family
+
+
+
 
     def _get_classification_info(self, soup: bs4.BeautifulSoup, classification_name: str):
         element = soup.find('div', class_='ts-Taxonomy-rang-label', string=classification_name)
@@ -119,14 +121,18 @@ class RuWikiParser:
 
 
 if __name__ == "__main__":
-    ruWikiParser = RuWikiParser()
+    ciconParser = CiconParser()
 
-    a = ruWikiParser.get_insects_links()
+    a = ciconParser.get_insects_links()
 
     for i in range(len(a)):
         print(f"{i+1}/{len(a)}")
-        ruWikiParser.print_insect(ruWikiParser.get_insect(a[i]))
+        ciconParser.print_insect(ciconParser.get_insect(a[i]))
         time.sleep(1)
+
+    r = ciconParser.get_insect("https://cicon.ru/golubyanka-oreas.html")
+    print(r)
+
 
 
 
