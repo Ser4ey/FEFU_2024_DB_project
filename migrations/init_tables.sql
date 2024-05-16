@@ -1,0 +1,22 @@
+CREATE TABLE insect
+(
+    id SERIAL PRIMARY KEY,
+    name TEXT
+);
+--
+--CREATE TABLE link
+--(
+--    id          SERIAL PRIMARY KEY,
+--    url         VARCHAR(255) UNIQUE NOT NULL,
+--    last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--    last_check TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+--);
+--
+--CREATE TABLE chat_link
+--(
+--    chat_id BIGINT,
+--    link_id INTEGER,
+--    PRIMARY KEY (chat_id, link_id),
+--    FOREIGN KEY (chat_id) REFERENCES chat (chat_id) ON DELETE CASCADE,
+--    FOREIGN KEY (link_id) REFERENCES link (id) ON DELETE CASCADE
+--);
