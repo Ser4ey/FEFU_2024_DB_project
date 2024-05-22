@@ -5,8 +5,10 @@ import bs4
 import requests
 from bs4 import BeautifulSoup
 
+from .AbstractInsectParser import AbstractInsectParser
 
-class CiconParser:
+
+class CiconParser(AbstractInsectParser):
     insects_catalogue_url = "https://cicon.ru/nasekomie.html"
 
     def __init__(self):
@@ -69,6 +71,13 @@ class CiconParser:
                 "security_notes": self._get_classification_info(soup, "Принятые меры охраны"),
         }
 
+    @staticmethod
+    def contains_cyrillic(text):
+        # Регулярное выражение для русских букв в Unicode
+        cyrillic_pattern = re.compile('[\u0400-\u04FF]')
+        # Проверяем, соответствует ли строка шаблону
+        return bool(cyrillic_pattern.search(text))
+
     def _get_lat_ru_names_and_img_and_squad_family(self, soup: bs4.BeautifulSoup) -> (str, str, str, str, str):
         ru_name = soup.select_one("h1").text
 
@@ -82,8 +91,15 @@ class CiconParser:
         text = [i.strip() for i in text]
 
         lat_name = " ".join(text[1].split(" ")[:2])
+
         squad = text[-2].split("–")[-1].strip()
         family = text[-1].split("–")[-1].strip()
+        if self.contains_cyrillic(squad):
+            squad = text[-4].split("–")[-1].strip()
+            family = text[-3].split("–")[-1].strip()
+        if self.contains_cyrillic(squad):
+            squad = ""
+            family = ""
 
         return lat_name, ru_name, img, squad, family
 
@@ -120,7 +136,5 @@ if __name__ == "__main__":
 
     r = ciconParser.get_insect("https://cicon.ru/golubyanka-oreas.html")
     print(r)
-
-
 
 

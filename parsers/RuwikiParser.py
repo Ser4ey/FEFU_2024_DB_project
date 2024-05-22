@@ -5,8 +5,10 @@ import bs4
 import requests
 from bs4 import BeautifulSoup
 
+from .AbstractInsectParser import AbstractInsectParser
 
-class RuWikiParser:
+
+class RuWikiParser(AbstractInsectParser):
     insects_catalogue_url = "https://ru.ruwiki.ru/wiki/Список_насекомых,_занесённых_в_Красную_книгу_России"
 
     def __init__(self):
