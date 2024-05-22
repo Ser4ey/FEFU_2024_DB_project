@@ -1,3 +1,4 @@
 from .InsectDAO import InsectDAO
-# from .AbstractTableDTO import AbstractTableDTO
+from .SquadDAO import SquadDAO
+from .FamilyDAO import FamilyDAO
 

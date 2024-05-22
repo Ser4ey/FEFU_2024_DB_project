@@ -52,6 +52,11 @@ class AbstractTableDAO(ABC):
         return self._execute(sql, parameters, fetchone=True)
         # пример использования команды select_desk(id=131, name='JoJo')
 
+    def select_many(self, **kwargs):
+        sql = f'SELECT * FROM {self.table_name} WHERE '
+        sql, parameters = self._format_args(sql, kwargs)
+        return self._execute(sql, parameters, fetchall=True)
+
     def is_exist(self, id_):
         sql = f'SELECT EXISTS(SELECT 1 FROM {self.table_name} WHERE id = %s)'
         parameters = (id_, )
