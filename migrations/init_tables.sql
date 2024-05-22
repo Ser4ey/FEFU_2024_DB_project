@@ -1,22 +1,36 @@
+CREATE TABLE squad (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
+
+
+CREATE TABLE family (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    squad_id INTEGER NOT NULL,
+
+    FOREIGN KEY (squad_id) REFERENCES squad (id) ON DELETE CASCADE
+);
+
+
 CREATE TABLE insect
 (
     id SERIAL PRIMARY KEY,
-    name TEXT
+    lat_name VARCHAR(255) UNIQUE NOT NULL,
+    ru_name VARCHAR(255) UNIQUE NOT NULL,
+    img VARCHAR(255),
+
+    family_id INTEGER NOT NULL,
+
+    description TEXT, -- Описание
+    category_and_status TEXT, -- Категория и статус
+    distribution TEXT, -- Распространение
+    area TEXT, -- Ареал
+    habitat TEXT, -- Места обитания и особенности экологии
+    limiting_factors TEXT, -- (Лимитирующие факторы
+    count_ TEXT, -- Численность
+    security_notex TEXT, -- Принятие мер по охране
+
+    FOREIGN KEY (family_id) REFERENCES family (id) ON DELETE CASCADE
 );
---
---CREATE TABLE link
---(
---    id          SERIAL PRIMARY KEY,
---    url         VARCHAR(255) UNIQUE NOT NULL,
---    last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
---    last_check TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
---);
---
---CREATE TABLE chat_link
---(
---    chat_id BIGINT,
---    link_id INTEGER,
---    PRIMARY KEY (chat_id, link_id),
---    FOREIGN KEY (chat_id) REFERENCES chat (chat_id) ON DELETE CASCADE,
---    FOREIGN KEY (link_id) REFERENCES link (id) ON DELETE CASCADE
---);
+
