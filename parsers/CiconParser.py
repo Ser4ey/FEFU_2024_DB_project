@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from .AbstractInsectParser import AbstractInsectParser
 
 
-class CiconParser(AbstractInsectParser):
+class CiconParserClass(AbstractInsectParser):
     insects_catalogue_url = "https://cicon.ru/nasekomie.html"
 
     def __init__(self):
@@ -33,7 +33,7 @@ class CiconParser(AbstractInsectParser):
         return r.text
 
     def get_insects_links(self):
-        r = self._get(CiconParser.insects_catalogue_url)
+        r = self._get(CiconParserClass.insects_catalogue_url)
 
         soup = BeautifulSoup(r, 'lxml')
         blocks = soup.select(".lin li a")
@@ -125,7 +125,7 @@ class CiconParser(AbstractInsectParser):
 
 
 if __name__ == "__main__":
-    ciconParser = CiconParser()
+    ciconParser = CiconParserClass()
 
     a = ciconParser.get_insects_links()
 

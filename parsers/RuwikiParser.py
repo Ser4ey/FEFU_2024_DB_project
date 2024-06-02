@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from .AbstractInsectParser import AbstractInsectParser
 
 
-class RuWikiParser(AbstractInsectParser):
+class RuWikiParserClass(AbstractInsectParser):
     insects_catalogue_url = "https://ru.ruwiki.ru/wiki/Список_насекомых,_занесённых_в_Красную_книгу_России"
 
     def __init__(self):
@@ -33,7 +33,7 @@ class RuWikiParser(AbstractInsectParser):
         return r.text
 
     def get_insects_links(self):
-        r = self._get(RuWikiParser.insects_catalogue_url)
+        r = self._get(RuWikiParserClass.insects_catalogue_url)
         soup = BeautifulSoup(r, 'lxml')
         blocks = soup.select("table.wikitable tr")
 
@@ -118,7 +118,7 @@ class RuWikiParser(AbstractInsectParser):
 
 
 if __name__ == "__main__":
-    ruWikiParser = RuWikiParser()
+    ruWikiParser = RuWikiParserClass()
 
     a = ruWikiParser.get_insects_links()
 

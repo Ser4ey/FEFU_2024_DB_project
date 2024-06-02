@@ -1,4 +1,4 @@
-from .CiconParser import CiconParser
-from .RuwikiParser import RuWikiParser
+from .CiconParser import CiconParserClass
+from .RuwikiParser import RuWikiParserClass
 from .AbstractInsectParser import AbstractInsectParser
 

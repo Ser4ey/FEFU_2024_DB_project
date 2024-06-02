@@ -1,8 +1,5 @@
-import re
-import time
-
 from repository import InsectDAO, SquadDAO, FamilyDAO
-from parsers import CiconParser, RuwikiParser, AbstractInsectParser
+from parsers import CiconParserClass, RuWikiParserClass, AbstractInsectParser
 
 
 class DB_DAO:
@@ -80,7 +77,7 @@ class DB_DAO:
 if __name__ == "__main__":
     db_dao = DB_DAO()
 
-    # db_dao.update_db(CiconParser())
-    db_dao.update_db(RuwikiParser())
+    # db_dao.update_db(CiconParserClass())
+    db_dao.update_db(RuWikiParserClass())
 
 
