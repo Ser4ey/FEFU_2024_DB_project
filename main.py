@@ -11,28 +11,6 @@ class DB_DAO:
         self.family_dao = FamilyDAO()
         self.squad_dao = SquadDAO()
 
-        self.all_insect = {}
-        self.all_family = {}
-        self.all_squad = {}
-        self.init_dicts()
-
-        print(f"Насекомые в бд: {self.all_insect}")
-        print(f"Семейства в бд: {self.all_family}")
-        print(f"Отряды в бд: {self.all_squad}")
-
-    def init_dicts(self):
-        insects = self.insect_dao.select_all()
-        for i in insects:
-            self.all_insect[i[0]] = i
-
-        families = self.family_dao.select_all()
-        for i in families:
-            self.all_family[i[0]] = i
-
-        squads = self.squad_dao.select_all()
-        for i in squads:
-            self.all_squad[i[0]] = i
-
     def update_db(self, insect_parser: AbstractInsectParser):
         links = insect_parser.get_insects_links()
 
@@ -42,7 +20,7 @@ class DB_DAO:
             print(insect_info)
 
             self.add_and_update_insect(insect_info)
-            print(f"Насекомое успешно добавлена в бд\n")
+            print(f"Насекомое успешно обновлено в бд\n")
 
     def add_and_update_insect(self, insect_info: dict):
         lat_name = insect_info["lat_name"]
@@ -52,7 +30,7 @@ class DB_DAO:
         family = insect_info["family"]
 
         if (not lat_name) or (not ru_name) or (not squad) or (not family):
-            print(f"Нет ключевой информации о насекомом: {insect_info}")
+            print(f"[-] Нет ключевой информации о насекомом: {insect_info}")
             return
 
         update_kwargs = {}
@@ -67,17 +45,25 @@ class DB_DAO:
         if squad is None:
             self.squad_dao.add_squad(squad_name)
             squad = self.squad_dao.select_one(name=squad_name)
+            print(f"[+++] Добавлен новый squad: {squad}")
 
         squad_id = squad[0]
-        print(squad, squad_id)
-        #
-        # self.squad_dao.add_squad(squad)
-        #
-        # squad_id = self.squad_dao.select_one(name=squad)[0]
-        # print(squad_id, squad)
+        print(f"[*] Отряд насекомого: {squad_id} | {squad}")
 
+        family = self.family_dao.select_one(name=family_name)
+        if family is None:
+            self.family_dao.add_family(name=family_name, squad_id=squad_id)
+            family = self.family_dao.select_one(name=family_name)
+            print(f"[+++] Добавлен новый family: {family}")
 
+        family_id = family[0]
+        print(f"[*] Семейство насекомого: {family_id} | {family}")
 
+        insect = self.insect_dao.select_one(lat_name=lat_name)
+        if insect is None:
+            self.insect_dao.add_insect(lat_name=lat_name, ru_name=ru_name, family_id=family_id)
+            insect = self.insect_dao.select_one(lat_name=lat_name)
+            print(f"[+++] Добавлено новое насекомое: {insect}")
 
 
 if __name__ == "__main__":
