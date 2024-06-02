@@ -77,6 +77,9 @@ class DB_DAO:
 
     def update_insect(self, lat_name, update_kwargs: dict):
         print(f"[+] Обновляем информацию о {lat_name} | {update_kwargs}")
+        if not update_kwargs:
+            print(f"[*] Нет информации о {lat_name}. update_kwargs: {update_kwargs}")
+            return
 
         insect = self.insect_dao.select_one(lat_name=lat_name)
         insect_id = insect[0]

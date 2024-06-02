@@ -97,14 +97,6 @@ class CiconParserClass(AbstractInsectParser):
 
         squad = squad.split()[-1]
         family = family.split()[-1]
-        # squad = text[-2].split("–")[-1].strip()
-        # family = text[-1].split("–")[-1].strip()
-        # if self.contains_cyrillic(squad):
-        #     squad = text[-4].split("–")[-1].strip()
-        #     family = text[-3].split("–")[-1].strip()
-        # if self.contains_cyrillic(squad):
-        #     squad = ""
-        #     family = ""
 
         return lat_name, ru_name, img, squad, family
 
