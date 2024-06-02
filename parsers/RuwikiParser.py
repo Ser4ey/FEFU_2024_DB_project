@@ -76,6 +76,8 @@ class RuWikiParserClass(AbstractInsectParser):
 
         if match:
             latin_name = match.group(1)
+            if self.contains_cyrillic(latin_name):
+                return ""
             return latin_name.strip()
         else:
             return ""
@@ -115,6 +117,13 @@ class RuWikiParserClass(AbstractInsectParser):
         for k, v in insect_dict.items():
             print(f"    {k}: {v}")
         print("-"*50)
+
+    @staticmethod
+    def contains_cyrillic(text):
+        # Регулярное выражение для русских букв в Unicode
+        cyrillic_pattern = re.compile('[\u0400-\u04FF]')
+        # Проверяем, соответствует ли строка шаблону
+        return bool(cyrillic_pattern.search(text))
 
 
 if __name__ == "__main__":

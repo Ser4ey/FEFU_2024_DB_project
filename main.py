@@ -12,7 +12,7 @@ class DB_DAO:
         links = insect_parser.get_insects_links()
 
         for i in range(len(links)):
-            print(f"Ссылка {i+1}/{len(links)}")
+            print(f"Ссылка {i + 1}/{len(links)}")
             insect_info = insect_parser.get_insect(links[i])
             print(insect_info)
 
@@ -37,9 +37,14 @@ class DB_DAO:
                 update_kwargs[key] = value
 
         self.add_to_db_if_not_exist(lat_name, ru_name, squad, family)
-        print(f"[*] Update info: {update_kwargs}")
 
-        self.update_insect(lat_name=lat_name, update_kwargs=update_kwargs)
+        insect = self.insect_dao.select_one(lat_name=lat_name)
+        if not (insect is None):
+            print(f"[+] Обновляем инфо о насекомом: {lat_name}")
+            print(f"[*] Update info: {update_kwargs}")
+            self.update_insect(lat_name=lat_name, update_kwargs=update_kwargs)
+        else:
+            print(f"[-] Насекомое не найдено: {lat_name}")
 
     def add_to_db_if_not_exist(self, lat_name: str, ru_name: str, squad_name: str, family_name: str):
         squad = self.squad_dao.select_one(name=squad_name)
@@ -61,10 +66,14 @@ class DB_DAO:
         print(f"[*] Семейство насекомого: {family_id} | {family}")
 
         insect = self.insect_dao.select_one(lat_name=lat_name)
-        if insect is None:
-            self.insect_dao.add_insect(lat_name=lat_name, ru_name=ru_name, family_id=family_id)
-            insect = self.insect_dao.select_one(lat_name=lat_name)
-            print(f"[+++] Добавлено новое насекомое: {insect}")
+        insect_ru = self.insect_dao.select_one(ru_name=ru_name)
+        if (insect is None) and (insect_ru is None):
+            try:
+                self.insect_dao.add_insect(lat_name=lat_name, ru_name=ru_name, family_id=family_id)
+                insect = self.insect_dao.select_one(lat_name=lat_name)
+                print(f"[+++] Добавлено новое насекомое: {insect}")
+            except Exception as er:
+                print(f"[---] Не удалось добавить насекомое: {lat_name}. er: {er}")
 
     def update_insect(self, lat_name, update_kwargs: dict):
         print(f"[+] Обновляем информацию о {lat_name} | {update_kwargs}")
@@ -77,7 +86,5 @@ class DB_DAO:
 if __name__ == "__main__":
     db_dao = DB_DAO()
 
-    # db_dao.update_db(CiconParserClass())
+    db_dao.update_db(CiconParserClass())
     db_dao.update_db(RuWikiParserClass())
-
-

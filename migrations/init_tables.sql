@@ -18,7 +18,7 @@ CREATE TABLE insect
     id SERIAL PRIMARY KEY,
     lat_name VARCHAR(255) UNIQUE NOT NULL,
     ru_name VARCHAR(255) UNIQUE NOT NULL,
-    img VARCHAR(255),
+    img VARCHAR(256),
 
     family_id INTEGER NOT NULL,
 

@@ -92,14 +92,19 @@ class CiconParserClass(AbstractInsectParser):
 
         lat_name = " ".join(text[1].split(" ")[:2])
 
-        squad = text[-2].split("–")[-1].strip()
-        family = text[-1].split("–")[-1].strip()
-        if self.contains_cyrillic(squad):
-            squad = text[-4].split("–")[-1].strip()
-            family = text[-3].split("–")[-1].strip()
-        if self.contains_cyrillic(squad):
-            squad = ""
-            family = ""
+        squad = text[-2].split("–")[0].strip()
+        family = text[-1].split("–")[0].strip()
+
+        squad = squad.split()[-1]
+        family = family.split()[-1]
+        # squad = text[-2].split("–")[-1].strip()
+        # family = text[-1].split("–")[-1].strip()
+        # if self.contains_cyrillic(squad):
+        #     squad = text[-4].split("–")[-1].strip()
+        #     family = text[-3].split("–")[-1].strip()
+        # if self.contains_cyrillic(squad):
+        #     squad = ""
+        #     family = ""
 
         return lat_name, ru_name, img, squad, family
 
