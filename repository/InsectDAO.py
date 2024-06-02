@@ -27,6 +27,7 @@ class InsectDAO(AbstractTableDAO):
 
     def update_insect(self, id_, **kwargs):
         sql = f'UPDATE {self.table_name} SET '
+        print(kwargs)
         sql, parameters = self._format_args_to_update(sql, kwargs)
         sql += " WHERE id = %s"
         parameters = parameters + (id_, )

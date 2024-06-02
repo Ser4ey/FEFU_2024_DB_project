@@ -67,7 +67,7 @@ class CiconParser(AbstractInsectParser):
                 # "area": self._get_classification_info(soup, "Места обитания и особенности экологии"),
                 "habitat": self._get_classification_info(soup, "Места обитания и особенности экологии"),
                 "limiting_factors": self._get_classification_info(soup, "Лимитирующие факторы"),
-                "count": self._get_classification_info(soup, "Численность"),
+                "count_": self._get_classification_info(soup, "Численность"),
                 "security_notes": self._get_classification_info(soup, "Принятые меры охраны"),
         }
 

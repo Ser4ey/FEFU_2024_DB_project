@@ -29,7 +29,7 @@ CREATE TABLE insect
     habitat TEXT, -- Места обитания и особенности экологии
     limiting_factors TEXT, -- (Лимитирующие факторы
     count_ TEXT, -- Численность
-    security_notex TEXT, -- Принятие мер по охране
+    security_notes TEXT, -- Принятие мер по охране
 
     FOREIGN KEY (family_id) REFERENCES family (id) ON DELETE CASCADE
 );

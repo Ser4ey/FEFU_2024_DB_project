@@ -66,7 +66,7 @@ class RuWikiParser(AbstractInsectParser):
             "area": self._get_info_block(soup, "Ареал"),
             "habitat": self._get_info_block(soup, "Местообитания"),
             "limiting_factors": self._get_info_block(soup, "Лимитирующие_факторы"),
-            "count": self._get_info_block(soup, "Численность"),
+            "count_": self._get_info_block(soup, "Численность"),
             "security_notes": self._get_info_block(soup, "Замечания_по_охране"),
         }
 

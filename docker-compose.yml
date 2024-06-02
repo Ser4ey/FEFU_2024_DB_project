@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
-      - postgresql:/var/lib/postgresql/data
+      - postgresql_fefu_db_2024:/var/lib/postgresql/data
     networks:
       - backend
 
@@ -30,7 +30,7 @@ services:
 
 
 volumes:
-  postgresql: { }
+  postgresql_fefu_db_2024: { }
 
 
 networks:

@@ -35,10 +35,14 @@ class DB_DAO:
 
         update_kwargs = {}
         for key, value in insect_info.items():
-            if (not (key in ["lat_name", "ru_name", "squad", "family"])) and not value.strip():
+            print(key, value)
+            if (not (key in ["lat_name", "ru_name", "squad", "family"])) and value.strip():
                 update_kwargs[key] = value
 
         self.add_to_db_if_not_exist(lat_name, ru_name, squad, family)
+        print(f"[*] Update info: {update_kwargs}")
+
+        self.update_insect(lat_name=lat_name, update_kwargs=update_kwargs)
 
     def add_to_db_if_not_exist(self, lat_name: str, ru_name: str, squad_name: str, family_name: str):
         squad = self.squad_dao.select_one(name=squad_name)
@@ -65,10 +69,18 @@ class DB_DAO:
             insect = self.insect_dao.select_one(lat_name=lat_name)
             print(f"[+++] Добавлено новое насекомое: {insect}")
 
+    def update_insect(self, lat_name, update_kwargs: dict):
+        print(f"[+] Обновляем информацию о {lat_name} | {update_kwargs}")
+
+        insect = self.insect_dao.select_one(lat_name=lat_name)
+        insect_id = insect[0]
+        self.insect_dao.update_insect(id_=insect_id, **update_kwargs)
+
 
 if __name__ == "__main__":
     db_dao = DB_DAO()
 
-    db_dao.update_db(CiconParser())
+    # db_dao.update_db(CiconParser())
+    db_dao.update_db(RuwikiParser())
 
 
