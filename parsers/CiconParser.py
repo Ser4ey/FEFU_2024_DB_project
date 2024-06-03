@@ -54,12 +54,10 @@ class CiconParserClass(AbstractInsectParser):
 
         lat_name, ru_name, img, squad, family = self._get_lat_ru_names_and_img_and_squad_family(soup)
 
-        squad = self._get_classification_info(soup, "Отряд:")
         if not self.is_only_ru_letters(squad):
             squad = ""
         squad = squad.capitalize()
 
-        family = self._get_classification_info(soup, "Семейство:")
         if not self.is_only_ru_letters(family):
             family = ""
         family = family.capitalize()
@@ -108,6 +106,9 @@ class CiconParserClass(AbstractInsectParser):
 
         squad = squad.split()[-1]
         family = family.split()[-1]
+        print(text)
+        print(squad)
+        print(family)
 
         return lat_name, ru_name, img, squad, family
 
