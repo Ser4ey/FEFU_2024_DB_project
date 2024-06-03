@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ insect.lat_name }} ({{ insect.ru_name }})</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>{{ insect.lat_name }} ({{ insect.ru_name }})</h1>
+    <img src="{{ insect.img }}" alt="Image of {{ insect.lat_name }}">
+    <p>Description: {{ insect.description }}</p>
+    <p>Category and Status: {{ insect.category_and_status }}</p>
+    <p>Distribution: {{ insect.distribution }}</p>
+    <p>Area: {{ insect.area }}</p>
+    <p>Habitat: {{ insect.habitat }}</p>
+    <p>Limiting Factors: {{ insect.limiting_factors }}</p>
+    <p>Count: {{ insect.count_ }}</p>
+    <p>Security Notes: {{ insect.security_notes }}</p>
+</body>
+</html>
