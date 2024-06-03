@@ -56,10 +56,12 @@ class RuWikiParserClass(AbstractInsectParser):
         squad = self._get_classification_info(soup, "Отряд:")
         if not self.is_only_ru_letters(squad):
             squad = ""
+        squad = squad.capitalize()
 
         family = self._get_classification_info(soup, "Семейство:")
         if not self.is_only_ru_letters(family):
             family = ""
+        family = family.capitalize()
 
         return {
             "lat_name": self._get_lat_name(soup),

@@ -53,6 +53,17 @@ class CiconParserClass(AbstractInsectParser):
         soup = BeautifulSoup(r, 'lxml')
 
         lat_name, ru_name, img, squad, family = self._get_lat_ru_names_and_img_and_squad_family(soup)
+
+        squad = self._get_classification_info(soup, "Отряд:")
+        if not self.is_only_ru_letters(squad):
+            squad = ""
+        squad = squad.capitalize()
+
+        family = self._get_classification_info(soup, "Семейство:")
+        if not self.is_only_ru_letters(family):
+            family = ""
+        family = family.capitalize()
+
         return {
                 "lat_name": lat_name,
                 "ru_name": ru_name,
@@ -119,6 +130,10 @@ class CiconParserClass(AbstractInsectParser):
         for k, v in insect_dict.items():
             print(f"    {k}: {v}")
         print("-"*50)
+
+    @staticmethod
+    def is_only_ru_letters(s):
+        return bool(re.fullmatch('[а-яА-ЯёЁ]+', s))
 
 
 if __name__ == "__main__":
