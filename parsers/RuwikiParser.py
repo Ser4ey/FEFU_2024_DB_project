@@ -53,13 +53,21 @@ class RuWikiParserClass(AbstractInsectParser):
         r = self._get(url)
         soup = BeautifulSoup(r, 'lxml')
 
+        squad = self._get_classification_info(soup, "Отряд:")
+        if not self.is_only_ru_letters(squad):
+            squad = ""
+
+        family = self._get_classification_info(soup, "Семейство:")
+        if not self.is_only_ru_letters(family):
+            family = ""
+
         return {
             "lat_name": self._get_lat_name(soup),
             "ru_name": self._get_ru_name(soup),
             "img": self._get_img(soup),
 
-            "squad": self._get_classification_info(soup, "Отряд:"),
-            "family": self._get_classification_info(soup, "Семейство:"),
+            "squad": squad,
+            "family": family,
 
             "description": self._get_info_block(soup, "Описание"),
             "distribution": self._get_info_block(soup, "Распространение"),
@@ -124,6 +132,10 @@ class RuWikiParserClass(AbstractInsectParser):
         cyrillic_pattern = re.compile('[\u0400-\u04FF]')
         # Проверяем, соответствует ли строка шаблону
         return bool(cyrillic_pattern.search(text))
+
+    @staticmethod
+    def is_only_ru_letters(s):
+        return bool(re.fullmatch('[а-яА-ЯёЁ]+', s))
 
 
 if __name__ == "__main__":
