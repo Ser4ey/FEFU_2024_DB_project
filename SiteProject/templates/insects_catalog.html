@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Красная книга России: Насекомые</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="img/favicon.png">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header__wrapper">
+            <div class="header__block">
+                <div class="burger">
+                    <span></span>
+                </div>
+                <nav class="nav nav-header">
+                    <a class="nav__link" href="#">Home</a>
+                    <a class="nav__link" href="#section__service">Service</a>
+                    <a class="nav__link" href="#section__catalog">Catalog</a>
+                    <a class="nav__link" href="#section__news">News</a>
+                </nav>
+            </div>
+
+            <a href="" class="logo header__logo"><img src="img/logo.svg" alt="logo"></a>
+
+            <div class="header__block header__block-right"></div>
+
+        </div>
+    </div>
+</header>
+
+<section class="insects">
+    <div class="container">
+        <div class="insects_wrapper">
+            {% for insect in insects %}
+                <div class="insect">
+                    <div class="insect__image">
+                        <img src="{{ insect.img }}">
+                    </div>
+                    <div class="insect__info">
+                        <p class="insect__lat-name">{{ insect.lat_name }}</p>
+                        <p class="insect__ru-name">{{ insect.ru_name }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer__wrapper">
+            <div class="footer__block footer__block-1">
+                <a href="" class="footer__logo"><img src="img/logo.svg" alt=""></a>
+            </div>
+            <div class="footer__block footer__block-2">
+                <nav class="nav nav-footer">
+                    <a class="nav__link" href="#">Home</a>
+                    <a class="nav__link" href="#section__service">Service</a>
+                    <a class="nav__link" href="#section__catalog">Catalog</a>
+                    <a class="nav__link" href="#section__news">News</a>
+                </nav>
+            </div>
+            <div class="footer__block footer__block-3">
+                <nav class="nav nav-footer">
+                    <a class="nav__link" href="files/privacy%20policy.pdf" target="_blank">Cookies policy</a>
+                    <a class="nav__link" href="files/privacy%20policy.pdf" target="_blank">Privacy policy</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
