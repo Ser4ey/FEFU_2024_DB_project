@@ -16,18 +16,14 @@
     <div class="container">
         <div class="header__wrapper">
             <div class="header__block">
-                <div class="burger">
-                    <span></span>
-                </div>
                 <nav class="nav nav-header">
-                    <a class="nav__link" href="#">Home</a>
-                    <a class="nav__link" href="#section__service">Service</a>
-                    <a class="nav__link" href="#section__catalog">Catalog</a>
-                    <a class="nav__link" href="#section__news">News</a>
+                    <a class="nav__link" href="#">Главная</a>
+                    <a class="nav__link" target="_blank" href="https://cicon.ru/nasekomie.html">cicon.ru</a>
+                    <a class="nav__link" target="_blank" href="https://ru.ruwiki.ru/wiki/Список_насекомых,_занесённых_в_Красную_книгу_Россииl">рувики</a>
                 </nav>
             </div>
 
-            <a href="" class="logo header__logo"><img src="img/logo.svg" alt="logo"></a>
+            <a href="#" class="logo header__logo"><img src="{{ url_for('static', filename='logo.png') }}" alt="logo"></a>
 
             <div class="header__block header__block-right"></div>
 
@@ -37,6 +33,8 @@
 
 <section class="insects">
     <div class="container">
+    <h2 class="block__title">Красная книга России: Насекомые</h2>
+
         <div class="insects_wrapper">
             {% for insect in insects %}
                 <a class="insect" href="/insect/{{insect.insect_id}}">
@@ -58,23 +56,8 @@
 <footer class="footer">
     <div class="container">
         <div class="footer__wrapper">
-            <div class="footer__block footer__block-1">
-                <a href="" class="footer__logo"><img src="img/logo.svg" alt=""></a>
-            </div>
-            <div class="footer__block footer__block-2">
-                <nav class="nav nav-footer">
-                    <a class="nav__link" href="#">Home</a>
-                    <a class="nav__link" href="#section__service">Service</a>
-                    <a class="nav__link" href="#section__catalog">Catalog</a>
-                    <a class="nav__link" href="#section__news">News</a>
-                </nav>
-            </div>
-            <div class="footer__block footer__block-3">
-                <nav class="nav nav-footer">
-                    <a class="nav__link" href="files/privacy%20policy.pdf" target="_blank">Cookies policy</a>
-                    <a class="nav__link" href="files/privacy%20policy.pdf" target="_blank">Privacy policy</a>
-                </nav>
-            </div>
+            <p>ООО «Касная книга России» © 862 – 2024.</p>
+            <p>Все права защищены.</p>
         </div>
     </div>
 </footer>
