@@ -39,7 +39,7 @@
     <div class="container">
         <div class="insects_wrapper">
             {% for insect in insects %}
-                <div class="insect">
+                <a class="insect" href="/insect/{{insect.insect_id}}">
                     <div class="insect__image">
                         <img src="{{ insect.img }}">
                     </div>
@@ -47,7 +47,7 @@
                         <p class="insect__lat-name">{{ insect.lat_name }}</p>
                         <p class="insect__ru-name">{{ insect.ru_name }}</p>
                     </div>
-                </div>
+                </a>
             {% endfor %}
         </div>
 

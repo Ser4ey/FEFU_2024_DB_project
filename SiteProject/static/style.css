@@ -56,6 +56,7 @@ body {
     border: 1px solid #666681;
     background: rgba(102, 102, 129, 0);
 }
+
 .btn-secondary:hover{
     background: rgba(102, 102, 129, 0.5);
 }
@@ -148,6 +149,14 @@ body {
     border: 1px solid #eeeeee38;
     border-radius: 5px;
     overflow: hidden;
+
+    transition: .3s ease;
+
+}
+
+.insect:hover {
+    border: 1px solid rgb(255, 255, 255);
+    /*color: rgba(192, 11, 11, 0.98);*/
 }
 
 .insect__image {
