@@ -12,11 +12,11 @@ def index():
     insects = repo.get_all_insects()
     return render_template('insects_catalog.html', insects=insects)
 
-#
-# @app.route('/insect/<int:id>')
-# def insect(id):
-#     insect = repo.get_insect(id)
-#     return render_template('insect.html', insect=insect)
+
+@app.route('/insect/<int:id_>')
+def insect(id_):
+    insect = repo.get_insect(id_)
+    return render_template('insect_page.html', insect=insect)
 #
 #
 # @app.route('/search', methods=['GET', 'POST'])

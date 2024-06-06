@@ -15,7 +15,7 @@ img {
 body {
     margin: 0;
     background-color: #191920;
-    font-family: 'Jost', sans-serif;
+    font-family: system-ui, sans-serif;
     color: #ffffff;
 }
 
@@ -55,7 +55,6 @@ body {
 
 .logo img {
     height: 80px;
-    display: block;
 }
 
 .nav {
@@ -76,11 +75,10 @@ body {
     color: #ff4646;
 }
 
-.block__title {
+h2.block__title {
     font-size: 36px;
     font-weight: 900;
     color: #ffffff;
-    text-transform: uppercase;
     margin: 40px 0 40px 0;
     line-height: 1;
     font-family: system-ui;
@@ -138,8 +136,6 @@ body {
     text-align: center;
     padding: 15px;
 }
-/*         new code          */
-
 
 .insect__lat-name {
     font-weight: 700;
@@ -147,6 +143,74 @@ body {
     font-family: system-ui;
     font-size: 19px;
 }
+
+/*         new code          */
+
+.info {
+    margin-top: 20px;
+}
+
+.info_wrapper {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.info h2 {
+    font-size: 36px;
+}
+
+.info_preview-block {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #eeeeee38;
+    border-radius: 15px;
+    width: fit-content;
+    /*align-self: center;*/
+    background-color: #ffffff;
+    color: #191920;
+
+}
+
+.info_preview-block__image img {
+    max-width: 226px;
+    max-height: 170px;
+}
+
+.info_preview-block__info {
+    display: flex;
+    flex-direction: column;
+    align-items: self-start;
+    justify-content: space-between;
+}
+.info_preview-block__info p {
+    margin: 0;
+    font-size: 18px;
+}
+
+.info_block {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    border: 1px solid #eeeeee38;
+    border-radius: 15px;
+    overflow: hidden;
+    padding: 20px;
+
+    transition: .3s ease;
+
+}
+
+h3.block__title  {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+}
+
+/*         new code          */
 
 
 .footer {

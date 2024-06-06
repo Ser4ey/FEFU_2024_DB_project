@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Красная книга России: Насекомые</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header__wrapper">
+            <div class="header__block">
+                <nav class="nav nav-header">
+                    <a class="nav__link" href="/">Главная</a>
+                    <a class="nav__link" target="_blank" href="https://cicon.ru/nasekomie.html">cicon.ru</a>
+                    <a class="nav__link" target="_blank" href="https://ru.ruwiki.ru/wiki/Список_насекомых,_занесённых_в_Красную_книгу_Россииl">рувики</a>
+                </nav>
+            </div>
+
+            <a href="#" class="logo header__logo"><img src="{{ url_for('static', filename='logo.png') }}" alt="logo"></a>
+
+            <div class="header__block header__block-right"></div>
+
+        </div>
+    </div>
+</header>
+
+<section class="info">
+    <div class="container">
+        <h2 class="block__title">Информация о {{ insect.lat_name }}</h2>
+
+        <div class="info_wrapper">
+
+            <div class="info_preview-block">
+                <div class="info_preview-block__image">
+                    <img src="{{ insect.img }}">
+                </div>
+                <div class="info_preview-block__info">
+                    <p class="insect__lat-name">лат. {{ insect.lat_name }}</p>
+                    <p class="insect__ru-name">рус. {{ insect.ru_name }}</p>
+                    <p class="insect__squad">Отряд: {{ insect.squad_name }}</p>
+                    <p class="insect__family">Семейство: {{ insect.family_name }}</p>
+                </div>
+            </div>
+
+
+            <div class="info_block">
+                <h3 class="block__title">Описание</h3>
+                <div class="info__text">{{ insect.description }}</div>
+            </div>
+
+            <div class="info_block">
+                <h3 class="block__title">Категория и статус</h3>
+                <div class="info__text">{{ insect.category_and_status }}</div>
+            </div>
+
+            <div class="info_block">
+                <h3 class="block__title">distribution</h3>
+                <div class="info__text">{{ insect.distribution }}</div>
+            </div>
+
+            <div class="info_block">
+                <h3 class="block__title">area</h3>
+                <div class="info__text">{{ insect.area }}</div>
+            </div>
+
+            <div class="info_block">
+                <h3 class="block__title">habitat</h3>
+                <div class="info__text">{{ insect.habitat }}</div>
+            </div>
+
+            <div class="info_block">
+                <h3 class="block__title">limiting_factors</h3>
+                <div class="info__text">{{ insect.limiting_factors }}</div>
+            </div>
+
+            <div class="info_block">
+                <h3 class="block__title">count</h3>
+                <div class="info__text">{{ insect.count }}</div>
+            </div>
+
+            <div class="info_block">
+                <h3 class="block__title">security_notes</h3>
+                <div class="info__text">{{ insect.security_notes }}</div>
+            </div>
+
+        </div>
+
+
+    </div>
+</section>
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer__wrapper">
+            <p>ООО «Касная книга России» © 862 – 2024.</p>
+            <p>Все права защищены.</p>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>
