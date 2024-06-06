@@ -154,6 +154,7 @@ h2.block__title {
     display: flex;
     gap: 20px;
     flex-direction: column;
+    margin-bottom: 40px;
 }
 
 .info h2 {
